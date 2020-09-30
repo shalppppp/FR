@@ -8,8 +8,7 @@ import re
 from sklearn.neighbors import KDTree
 from sympy import *
 import os, sys
-
-# 用matplot进行可视化
+'''
 def PointCloudVisualization(PointCloud, color = 'r', marker = '.'):
     PointCloud = PointCloud.reshape((-1, 3))
     x=PointCloud[:,0]
@@ -29,7 +28,10 @@ def PointCloudVisualization(PointCloud, color = 'r', marker = '.'):
     ax.set_ylabel('Y Label')
     ax.set_zlabel('Z Label')
     plt.show()
+'''
+# 用matplot进行可视化
 
+'''
 def CurveVisualization(PointCloud, color = 'r', marker = '.'):
     PointCloud = PointCloud.reshape((-1, 3))
     x=PointCloud[:,0]
@@ -55,6 +57,8 @@ def CurveVisualization(PointCloud, color = 'r', marker = '.'):
     ax.set_zlabel('Z Label')
     # ax.axis("off")
     plt.show()
+'''
+
 
 def CropFace(points, N = 80):
     '''
@@ -150,6 +154,8 @@ def RandomDownSample(point_cloud, pointnumber):
 
 import vispy
 from vispy.scene import visuals
+
+'''
 def PointCloudVisualbyVispy(data, size = 1):
     # def vis_show(data, size = 1):
     data = data.reshape((-1, 3))
@@ -165,12 +171,15 @@ def PointCloudVisualbyVispy(data, size = 1):
     # add a colored 3D axis for orientation
     axis = visuals.XYZAxis(parent=view.scene)
     vispy.app.run()
+'''
+
 def NormalizePointcloud(point_cloud, nosetip):
     x = point_cloud[:, 0] - nosetip[0]
     y = point_cloud[:, 1] - nosetip[1]
     z = point_cloud[:, 2] - nosetip[2]
 
     return np.array([x, y, z]).T
+'''
 def visual(data1, data2):
     import vispy
     from vispy.scene import visuals
@@ -190,6 +199,8 @@ def visual(data1, data2):
     view.camera = 'arcball'
     axis = visuals.XYZAxis(parent=view.scene)
     vispy.app.run()
+'''
+
 def smooth(data, k = 20, d = 8):
     kdt = KDTree(data, leaf_size=30)
     for i,point in enumerate(data):

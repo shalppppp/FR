@@ -39,21 +39,28 @@ def getfilename(originfilepath, savefd,  filetype = "all", fileclass = "all"):
         # print(filenames)
         for filename in filenames:
             if filetype == "all" and fileclass == "all":
-                print(os.path.join(dirpath, filename))
+                # print(os.path.join(dirpath, filename))
+                savefd += [os.path.join(dirpath, filename)]
 
             elif filetype == "all":
                 if re.search(fileclass, filenames):
-                    print(os.path.join(dirpath, filename))
+                    # print(os.path.join(dirpath, filename))
+                    savefd += [os.path.join(dirpath, filename)]
+
             elif fileclass == "all":
                 if os.path.splitext(filename)[1] == filetype:
-                    print(os.path.join(dirpath, filename))
+                    # print(os.path.join(dirpath, filename))
+                    savefd += [os.path.join(dirpath, filename)]
 
             else:
                 if os.path.splitext(filename)[1] == filetype and re.search(fileclass, filename):
-                    print(os.path.join(dirpath, filename))
-                # savefd += [os.path.join(dirpath, filename)]
+                    # print(os.path.join(dirpath, filename))
+                    savefd += [os.path.join(dirpath, filename)]
 # print(sys.path[1])
 path = r"C:\Users\HIT\Desktop\facerecognition\data\BosphorousDB"
 fd = []
 
 getfilename(path, fd, ".bnt", "N_N_1")
+
+nrows, ncols, imfile, data = ReadBntfile(fd[0])
+print(nrows, ncols, imfile, data)
