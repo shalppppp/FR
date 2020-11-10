@@ -4,6 +4,7 @@ from vispy.scene import visuals
 
 
 # 用matplot进行可视化
+from mpl_toolkits.mplot3d import Axes3D
 def PointCloudVisualization(PointCloud, color = 'r', marker = '.'):
     PointCloud = PointCloud.reshape((-1, 3))
     x=PointCloud[:,0]
@@ -23,7 +24,7 @@ def PointCloudVisualization(PointCloud, color = 'r', marker = '.'):
     ax.set_ylabel('Y Label')
     ax.set_zlabel('Z Label')
     plt.show()
-def CurveVisualization(PointCloud, color = 'r', marker = '.'):
+def CurveVisualization3D(PointCloud, color = 'r', marker = '.'):
     PointCloud = PointCloud.reshape((-1, 3))
     x=PointCloud[:,0]
     y=PointCloud[:,1]
@@ -49,6 +50,33 @@ def CurveVisualization(PointCloud, color = 'r', marker = '.'):
     # ax.axis("off")
     plt.show()
 
+def CurveVisualization2D(Points, color = 'r', marker = '.'):
+    Points = Points.reshape((-1, 2))
+    x=Points[:,0]
+    y=Points[:,1]
+    # z=PointCloud[:,2]
+    # print(x)
+    fig=plt.figure(dpi=120)
+    ax=fig.add_subplot(111)
+    # plt.title('point cloud')
+    ax.plot(x,y,c=color)
+
+    #ax.set_facecolor((0,0,0))
+    # ax.axis('scaled')
+    # ax.xaxis.set_visible(False)
+    # ax.yaxis.set_visible(False)
+    ax.set_xlim(-50, 50)
+    ax.set_ylabel('')
+    ax.set_ylim(-50, 50)
+    # ax.set_zlabel('')
+    # ax.set_zlim(-50, 50)
+    ax.set_xlabel('X Label')
+    ax.set_ylabel('Y Label')
+    # ax.set_zlabel('Z Label')
+    # ax.axis("off")
+    plt.show()
+
+
 def PointCloudVisualbyVispy(data, size=1):
     # def vis_show(data, size = 1):
     data = data.reshape((-1, 3))
@@ -62,7 +90,7 @@ def PointCloudVisualbyVispy(data, size=1):
     view.camera = 'turntable'  # or try 'arcball'
 
     # add a colored 3D axis for orientation
-    axis = visuals.XYZAxis(parent=view.scene)
+    # axis = visuals.XYZAxis(parent=view.scene)
     vispy.app.run()
 
 def visualtwodata(data1, data2, size1 = 1, size2 = 3):
@@ -80,5 +108,5 @@ def visualtwodata(data1, data2, size1 = 1, size2 = 3):
     view.add(inter_points)
     # utils.PointCloudVisualization(data)
     view.camera = 'arcball'
-    axis = visuals.XYZAxis(parent=view.scene)
+    # axis = visuals.XYZAxis(parent=view.scene)
     vispy.app.run()

@@ -138,6 +138,7 @@ def transform_icp(data, mask, nosetip,  N = 1000):
 
     # A = knn_nearest(data, nosetip, N)
     iA = random.sample(range(data.shape[0]),N)
+
     A = data[iA, :]
     T, dist, i = icp(A, mask)
 

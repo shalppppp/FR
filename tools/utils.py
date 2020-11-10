@@ -83,6 +83,7 @@ def knn_kdtree(point_cloud, nsample):
     indices = np.zeros((n_points, nsample))
     _, indices = kdt.query(point_cloud, k = nsample)
     return indices
+
 import re
 class WRL:
     def __init__(self, WRLfile):
@@ -201,7 +202,7 @@ def visual(data1, data2):
     vispy.app.run()
 '''
 
-def smooth(data, k = 20, d = 8):
+def Smooth(data, k = 20, d = 8):
     kdt = KDTree(data, leaf_size=30)
     for i,point in enumerate(data):
         point = point.reshape(-1, 1)
@@ -229,7 +230,7 @@ def smooth1(V, k = 0.95):
     return V
 
 def GetNosetip(data):
-    data = smooth(data, 30, 8)
+    # data = Smooth(data, 30, 8)
     nosetip_i = np.where(data[:, 2] == np.max(data[:, 2]))
     nosetip = data[nosetip_i]
 

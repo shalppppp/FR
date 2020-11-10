@@ -2,9 +2,17 @@ import struct
 import numpy as np
 import sys, os
 import re
-
-
+import h5py
+from tqdm import tqdm
 def ReadBntfile(filename):
+    """
+    读取bnt文件，将二进制文件中的数据转换成三维空间坐标
+    Args:
+        filename: 文件路径
+
+    Returns:
+        行， 列，二维图片签名，三维坐标
+    """
     fp = open(filename, 'rb')
     nrows = struct.unpack('@h',fp.read(2))
     ncols = struct.unpack('@h',fp.read(2))
@@ -33,7 +41,7 @@ def ReadBntfile(filename):
 
     return nrows, ncols, imfile, data
 
-def getfilename(originfilepath, savefd,  filetype = "all", fileclass = "all"):
+def GetListPahts(originfilepath, savefd,  filetype = "all", fileclass = "all"):
     for (dirpath, dirnames, filenames) in os.walk(originfilepath):
         # print(dirpath.split("\\")[-1])
         # print(filenames)
@@ -57,10 +65,34 @@ def getfilename(originfilepath, savefd,  filetype = "all", fileclass = "all"):
                     # print(os.path.join(dirpath, filename))
                     savefd += [os.path.join(dirpath, filename)]
 # print(sys.path[1])
+def GetLabel(filename):
+    file = filename.split("\\")[-1]
+    label = file.split(".")[0]
+    return label
+
+
+def create_h5(paths):
+    with h5py.File('data_BosDB.hdf5', 'w') as f:
+        data = f.create_group('data')
+        # label_group = f.create_group('label')
+        label = []
+        for path in tqdm(paths):
+            nrows, ncols, imfile, pcdata = ReadBntfile(path)
+            lb = GetLabel(path)
+            label.append(lb)
+            d = data.create_dataset(lb, data = pcdata)
+            d.attrs["size"] = [nrows, ncols]
+            try:
+                d.attrs[imfile] = imfile
+            except:
+                print(path)
+        # label_group.create_dataset('label' ,data = label)
+        f.close()
+# print(nrows, ncols, imfile, data)
+
+
 path = r"C:\Users\HIT\Desktop\facerecognition\data\BosphorousDB"
-fd = []
-
-getfilename(path, fd, ".bnt", "N_N_1")
-
-nrows, ncols, imfile, data = ReadBntfile(fd[0])
-print(nrows, ncols, imfile, data)
+list_paths = []
+GetListPahts(path, list_paths, ".bnt")
+# print(GetLabel(list_paths[9]))
+create_h5(list_paths)

@@ -1,1 +1,2 @@
-data
+/data/*
+*.hdf5
